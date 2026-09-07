@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX_TOKEN_LEN 100
+
+char* keywords[] = {"int", "float", "if", "else", "while", "return", "void", NULL};
+
+int is_keyword(const char* str) {
+    for (int i = 0; keywords[i] != NULL; i++) {
+        if (strcmp(str, keywords[i]) == 0) return 1;
+    }
+    return 0;
+}
+
+void analyze(FILE* fp) {
+    char ch;
+    char token[MAX_TOKEN_LEN];
+    int i;
+
+    while ((ch = fgetc(fp)) != EOF) {
+        if (isspace(ch)) {
+            continue;
+        }
+        else if (isalpha(ch) || ch == '_') {
+            // Identifier or keyword
+            i = 0;
+            token[i++] = ch;
+
+            while (isalnum(ch = fgetc(fp)) || ch == '_') {
+                token[i++] = ch;
+            }
+
+            token[i] = '\0';
+            ungetc(ch, fp);
+
+            if (is_keyword(token))
+                printf("<KEYWORD, %s>\n", token);
+            else
+                printf("<IDENTIFIER, %s>\n", token);
+        }
+        else if (isdigit(ch)) {
+            // Number
+            i = 0;
+            token[i++] = ch;
+
+            while (isdigit(ch = fgetc(fp))) {
+                token[i++] = ch;
+            }
+
+            token[i] = '\0';
+            ungetc(ch, fp);
+
+            printf("<NUMBER, %s>\n", token);
+        }
+        else if (ispunct(ch)) {
+            // Simple symbols and operators
+            printf("<SYMBOL, %c>\n", ch);
+        }
+    }
+}
+
+int main() {
+    FILE* fp = fopen("input.c", "r");
+
+    if (!fp) {
+        perror("Failed to open file");
+        return 1;
+    }
+
+    printf("Lexical Analysis Output:\n\n");
+    analyze(fp);
+    fclose(fp);
+
+    return 0;
+}
