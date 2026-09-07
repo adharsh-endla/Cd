@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char input[10];
+int i, error;
+
+void S();
+void C();
+
+int main()
+{
+    i = 0;
+    error = 0;
+
+    printf("Enter an arithmetic expression: ");
+    scanf("%s", input);
+
+    S();
+
+    if (strlen(input) == i && error == 0)
+        printf("\nAccepted...!!!\n");
+    else
+        printf("\nRejected...!!!\n");
+
+    return 0;
+}
+
+void S()
+{
+    C();
+    C();
+}
+
+void C()
+{
+    if (input[i] == 'c')
+    {
+        i++;
+        C();
+    }
+    else if (input[i] == 'd')
+    {
+        i++;
+    }
+    else
+    {
+        error = 1;
+    }
+}
