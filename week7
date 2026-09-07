@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// -------- Static Allocation --------
+int static_global = 42; // allocated at compile time (static)
+
+void static_allocation_demo() {
+    static int static_local = 100; // static local variable
+    printf("Static Allocation:\n");
+    printf("Global: %d at %p\n", static_global, (void*)&static_global);
+    printf("Static Local: %d at %p\n", static_local, (void*)&static_local);
+}
+
+// -------- Stack Allocation --------
+void stack_allocation_demo(int arg) {
+    int local_var = 10; // stack
+    printf("Stack Allocation:\n");
+    printf("Argument: %d at %p\n", arg, (void*)&arg);
+    printf("Local Variable: %d at %p\n", local_var, (void*)&local_var);
+}
+
+// -------- Heap Allocation --------
+void heap_allocation_demo() {
+    int *heap_var = (int *)malloc(sizeof(int));
+    if (heap_var == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    *heap_var = 99;
+    printf("Heap Allocation:\n");
+    printf("Heap Variable: %d at %p\n", *heap_var, (void*)heap_var);
+
+    free(heap_var); // don't forget to free!
+}
+
+int main() {
+    printf("---- Storage Allocation Strategies in C ----\n\n");
+
+    static_allocation_demo();
+    stack_allocation_demo(25);
+    heap_allocation_demo();
+
+    return 0;
+}
