@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char productions[10][20];
+char firstSet[10][20];
+int n;
+
+void findFirst(int i)
+{
+    int j = 0;
+    char *production = productions[i];
+
+    if (production[0] != ' ') {
+        printf("\nFIRST(%c) = {", production[0]);
+
+        for (int j = 0; j < n; j++) {
+            if (productions[j][0] == production[0]) {
+                printf("%c", firstSet[j][0]);
+
+                for (int k = 0; k < strlen(firstSet[j]); k++) {
+                    printf("%c", firstSet[j][k]);
+                }
+            }
+        }
+
+        printf(" }\n");
+    }
+}
+
+int main()
+{
+    printf("Enter number of productions: ");
+    scanf("%d", &n);
+
+    getchar();
+
+    printf("Enter productions\n");
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", productions[i]);
+    }
+if (productions[i][0] == symbol) {
+    char next = productions[i][3];
+
+    if (isupper(next)) {
+        if (is_terminal(next)) {
+            strcat(result, &next);
+        }
+    }
+    else {
+        char temp[MAX] = "";
+        findFirst(next, temp);
+
+        for (int j = 0; j < strlen(temp); j++) {
+            if (!strchr(result, temp[j])) {
+                strncat(result, &temp[j], 1);
+            }
+        }
+    }
+}
+    return 0;
+}
+int main()
+{
+    printf("Enter number of productions: ");
+    scanf("%d", &n);
+
+    getchar();
+
+    printf("Enter productions\n");
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", productions[i]);
+    }
+}
