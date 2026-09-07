@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    int i=0,j=0;
+    char ch,b[100];
+
+    printf("Expression terminated by $:");
+
+    while((ch=getchar())!='$')
+    {
+        b[i]=ch;
+        i++;
+    }
+
+    b[i]='\0';
+
+    printf("Given expression:");
+
+    for(j=0;j<i;j++)
+        printf("%c",b[j]);
+
+    printf("\nSymbol table\n");
+    printf("symbol\taddress\ttype\n");
+
+    j=0;
+
+    while(j<i)
+    {
+        ch=b[j];
+
+        if(isalpha(ch))
+        {
+            char *p=(char *)malloc(sizeof(char));
+
+            *p=ch;
+
+            printf("%c\t%p\tidentifier\n",
+                   ch,(void *)p);
+
+            free(p);
+        }
+        else if(ch=='+' || ch=='-' ||
+                ch=='*' || ch=='/')
+        {
+            char *p=(char *)malloc(sizeof(char));
+
+            *p=ch;
+
+            printf("%c\t%p\toperator\n",
+                   ch,(void *)p);
+
+            free(p);
+        }
+
+        j++;
+    }
+
+    return 0;
+}
